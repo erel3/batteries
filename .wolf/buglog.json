@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-11-20T14:25:19.637Z",
+      "error_message": "Null/undefined access in main.swift",
+      "file": "Sources/batteries/main.swift",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check)",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-11-20T14:25:19.637Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-11-20T14:26:28.961Z",
+      "error_message": "Incorrect value in code",
+      "file": "Tests/BatteriesCoreTests/IPhoneTests.swift",
+      "root_cause": "Had \"-----BEGIN PRIVATE KEY-----\\n\\(pkcs8.base64Encode",
+      "fix": "Changed to \"PRIVATE\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-11-20T14:26:28.961Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-11-20T22:49:04",
+      "error_message": "XCTAssertTrue failed - {\"overrides\":{\"pods\":{\"case\":{\"style\":\"circle\",\"low\":30}}}}",
+      "file": "Tests/BatteriesCoreTests/ItemsTests.swift",
+      "root_cause": "JSONEncoder key order is not stable; the test matched a literal key order",
+      "fix": "encoder.outputFormatting = .sortedKeys in the test",
+      "tags": [
+        "test",
+        "json",
+        "swift"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-20T22:49:04"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-11-20T20:49:18.310Z",
+      "error_message": "Significant refactor of AlertPresenter.swift",
+      "file": "Sources/BatteriesApp/AlertPresenter.swift",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 4\u21924 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-11-20T20:49:18.310Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-11-21T01:55:00Z",
+      "error_message": "Circle alert corners not transparent, box visible around rounded HUD",
+      "file": "Sources/BatteriesApp/AlertPresenter.swift",
+      "root_cause": "NSVisualEffectView rounded via layer cornerRadius: blur and window shadow stay rectangular",
+      "fix": "effect.maskImage = stretchable rounded-rect image (capInsets); panel.display() + invalidateShadow() after ordering in",
+      "tags": [
+        "appkit",
+        "hud",
+        "visual-effect"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-21T01:55:00Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-11-21T01:55:00Z",
+      "error_message": "SettingsWindowTests: XCTAssertLessThan failed (720.0 not less than 0.0) - must stay off screen",
+      "file": "Tests/BatteriesAppTests/SettingsWindowTests.swift",
+      "root_cause": "orderFrontRegardless constrains a titled window back onto a display; -30000 origin is not safe",
+      "fix": "Never order the test window in; layoutIfNeeded + cacheDisplay; assert !isVisible",
+      "tags": [
+        "test",
+        "appkit",
+        "owner-screen"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-21T01:55:00Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-11-21T02:20:00Z",
+      "error_message": "Cmd+Q / Cmd+W do nothing in settings window",
+      "file": "Sources/BatteriesApp/AppDelegate.swift",
+      "root_cause": "Agent app built without NSApp.mainMenu; key equivalents come only from the main menu",
+      "fix": "AppDelegate.mainMenu(): Close Window (Cmd+W, performClose) and Quit Batteries (Cmd+Q, terminate)",
+      "tags": [
+        "appkit",
+        "agent-app",
+        "menu"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-21T02:20:00Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-11-21T02:40:00Z",
+      "error_message": "Notification shows generic white icon though Finder shows AppIcon.icns",
+      "file": "justfile",
+      "root_cause": "IconServices system cache (/Library/Caches/com.apple.iconservices.store) stored the generic icon for com.akim.batteries when the first notifications went out before the app had an icon. Survives reboot, bundle version bump, killall NotificationCenter. Proven: same icon under a fresh bundle ID showed correctly.",
+      "fix": "Owner deleted /Library/Caches/com.apple.iconservices.store (sudo) and restarted. Asset catalog (Assets.car + CFBundleIconName) kept: modern format, harmless.",
+      "tags": [
+        "icon",
+        "notifications",
+        "actool"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-21T02:40:00Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-11-20T21:37:12.740Z",
+      "error_message": "Incorrect value in code",
+      "file": "Sources/BatteriesApp/AlertPresenter.swift",
+      "root_cause": "Had \"\\(item.percent)%. Plug it in.\"",
+      "fix": "Changed to \"\\(kind == .low ? \"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "swift"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-11-20T21:37:12.740Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-11-21T02:47:00Z",
+      "error_message": "Widget missing from gallery; BatteriesWidget crashes EXC_BREAKPOINT in ExtensionFoundation closure in _EXRunningExtension._shared (from _EXExtension.bootstrap via BatteryWidget.$main); chronod: descriptor query failed NSCocoaErrorDomain 4099",
+      "file": "Package.swift",
+      "root_cause": "SwiftPM linked the widget with entry point main. Xcode links extensions with -e _NSExtensionMain, which runs ExtensionMain.start (sets the extension type) before the @main Widget; without it ExtensionMain.shared is empty and the force-unwrap traps.",
+      "fix": "BatteriesWidget linkerSettings add -Xlinker -e -Xlinker _NSExtensionMain. Found by comparing nm -u with a working Developer ID widget (BetterTouchTool imports _NSExtensionMain).",
+      "tags": [
+        "widgetkit",
+        "swiftpm",
+        "appex",
+        "linker"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-21T02:47:00Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-11-21T03:20:00Z",
+      "error_message": "usbmuxd Listen: Result Number 0 but no Attached/Detached events ever",
+      "file": "Sources/BatteriesCore/Usbmux.swift",
+      "root_cause": "Listen request lacked kLibUSBMuxVersion; usbmuxd (macOS 27.2.1) then accepts and stays silent",
+      "fix": "Send [\"MessageType\": \"Listen\", \"kLibUSBMuxVersion\": 3] like libusbmuxd; Attached arrives at once for each connected phone",
+      "tags": [
+        "usbmuxd",
+        "iphone",
+        "protocol"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-11-21T03:20:00Z"
+    }
+  ]
+}
