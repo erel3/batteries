@@ -257,6 +257,8 @@ private struct GeneralPane: View {
       }
       Section {
         LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev")
+        // Also how appctl finds this app's releases: it reads the repository URL from the binary.
+        Link("Source Code on GitHub", destination: URL(string: "https://github.com/Erel3/batteries")!)
       }
       Section {
         Button("Quit Batteries") { NSApp.terminate(nil) }
