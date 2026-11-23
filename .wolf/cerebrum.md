@@ -17,6 +17,7 @@ budget_tokens: 2000
 - No menu bar icon; nothing acts without the owner's control; no self-updating. Owner skips remaining questions with "build core" — default the rest and say so.
 
 ## Key Learnings
+- [2026-11-23] appctl (~/.local/bin/appctl) finds an app's GitHub repo from a github.com/<owner>/<repo> URL in the binary (General pane "Source Code on GitHub" link) and reads releases/latest unauthenticated: the repo must be public with releases. Without it, it name-matches an unrelated Homebrew cask "batteries". Release = `just release` (needs RELEASE_NOTES.md, clean tree; bumps VERSION, notarizes, tags, pushes, gh release).
 - [2026-11-21] iPhone reads are event-driven: Usbmux.listen (needs kLibUSBMuxVersion 3) fires on Attached/Detached, Monitor reads at once; 5 min poll stays for level changes. A locked iPhone drops off Wi-Fi in usbmuxd within minutes.
 - [2026-11-21] macOS 27 Apple widgets (Batteries) use Liquid Glass; third-party widgets cannot. containerBackground with .ultraThinMaterial, Color.clear or Color.black.opacity(0.35) all render the same system grey gradient (#282829 top to #0D0E0E). Keep Color.clear; .fill.tertiary only adds a lighter grey.
 - [2026-11-21] A WidgetKit appex built by SwiftPM must link with `-Xlinker -e -Xlinker _NSExtensionMain` (Xcode does this silently). Without it the widget traps at launch in ExtensionFoundation and never appears in the gallery. Debug widget launch via chronod logs + ~/Library/Logs/DiagnosticReports/BatteriesWidget-*.ips.
