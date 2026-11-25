@@ -9,6 +9,7 @@ budget_tokens: 2000
 > Last updated: 2026-11-20
 
 ## User Preferences
+- [2026-11-25] Updates work as in LidGuard: check GitHub releases every 12 h (toggle in General), window with notes, owner clicks Install. Never install silently. Relaunch also kills BatteriesWidget (stale-version widget bug).
 - [2026-11-21] Alerts are informative only: state and level, never advice ("plug it in", "unplug it"). The owner decides what to do. Notification = title device name, body "Low Battery · 20%" / "Charged · 80%".
 - [2026-11-21] Run `just install` myself once a change is finished (lint + test green). Launching the app stays the owner's step.
 

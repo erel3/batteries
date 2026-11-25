@@ -246,6 +246,8 @@ private struct LevelPicker: View {
 private struct GeneralPane: View {
   @State private var openAtLogin = SMAppService.mainApp.status == .enabled
   @State private var loginError: String?
+  @State private var checksForUpdates = Updater.shared.checksAutomatically
+  @State private var checking = false
 
   var body: some View {
     Form {
@@ -259,6 +261,24 @@ private struct GeneralPane: View {
         LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev")
         // Also how appctl finds this app's releases: it reads the repository URL from the binary.
         Link("Source Code on GitHub", destination: URL(string: "https://github.com/Erel3/batteries")!)
+      }
+      Section {
+        Toggle("Check for Updates Automatically", isOn: Binding(get: { checksForUpdates }, set: {
+          Updater.shared.checksAutomatically = $0
+          checksForUpdates = $0
+        }))
+        LabeledContent("Updates") {
+          Button("Check Now") {
+            checking = true
+            Task {
+              await Updater.shared.check(silent: false)
+              checking = false
+            }
+          }
+          .disabled(checking)
+        }
+      } footer: {
+        Text("Looks at GitHub every 12 hours and shows what changed. Nothing installs until you click Install Update.")
       }
       Section {
         Button("Quit Batteries") { NSApp.terminate(nil) }

@@ -12,6 +12,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
     UNUserNotificationCenter.current().delegate = self
     NSApp.mainMenu = Self.mainMenu()
     monitor.start()
+    Updater.shared.start()
     // Started at login: stay quiet. Started by hand: show where the app is.
     if SMAppService.mainApp.status != .enabled { showSettings() }
   }

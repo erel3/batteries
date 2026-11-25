@@ -10,7 +10,7 @@ This project uses OpenWolf for context management. Read and follow .wolf/OPENWOL
 
 Batteries = native macOS app replacing AirBuddy's battery features for the owner only (public repo github.com/Erel3/batteries, MIT, so appctl can track releases; not promoted or supported). Shows the battery of every device (Mac, AirPods, BLE keyboards/mice, Sony headphones, DualSense, iPhone), alerts on per-device low/high thresholds, and has a Notification Center widget in the exact format of macOS's own Batteries widget.
 
-**Why it exists**: AirBuddy 3 went the "superapp" way and lost the owner's trust (closed source, silent self-updates, broken on macOS 27). Owner rules: no menu bar icon (battery cost), nothing acts without the owner's control, no self-updating.
+**Why it exists**: AirBuddy 3 went the "superapp" way and lost the owner's trust (closed source, silent self-updates, broken on macOS 27). Owner rules: no menu bar icon (battery cost), nothing acts without the owner's control, no silent self-updating: the updater (LidGuard's, `Updater.swift`) checks GitHub every 12 h but installs only when the owner clicks Install Update (2026-11-25, owner asked for it).
 
 **State**: core, agent app and widget built (`just app` → `dist/Batteries.app`); owner installs with `just install`. Read `.wolf/STATUS.md` first, then `docs/RESEARCH.md`.
 
