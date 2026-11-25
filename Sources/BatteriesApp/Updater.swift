@@ -142,12 +142,16 @@ final class Updater {
     return current
   }
 
-  /// After quitting: the old widget process would keep reporting the old version and WidgetKit would
-  /// reject its snapshots (as `just install` found), so it goes too; then the new app opens.
+  /// After quitting, the same steps as `just install`: the old widget process would keep reporting
+  /// the old version and WidgetKit would reject its snapshots, so it goes too; LaunchServices learns
+  /// the new bundle (the widget gallery reads it from there); then the new app opens and, at launch,
+  /// asks the widget to redraw.
   private func relaunch(_ app: URL) {
     let pid = ProcessInfo.processInfo.processIdentifier
     let path = app.path.replacingOccurrences(of: "'", with: "'\\''")
-    let script = "while kill -0 \(pid) 2>/dev/null; do sleep 0.1; done; pkill -x BatteriesWidget; open '\(path)'"
+    let lsregister = "/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
+    let script = "while kill -0 \(pid) 2>/dev/null; do sleep 0.1; done; pkill -x BatteriesWidget; "
+      + "\(lsregister) -f -R '\(path)'; open '\(path)'"
     let shell = Process()
     shell.executableURL = URL(fileURLWithPath: "/bin/sh")
     shell.arguments = ["-c", script]
