@@ -9,6 +9,7 @@ import WidgetKit
 struct Entry: TimelineEntry {
   let date: Date
   let items: [BatteryItem]
+  var note: String?
 }
 
 struct Provider: TimelineProvider {
@@ -34,7 +35,8 @@ struct Provider: TimelineProvider {
 
   private func current() -> Entry {
     let now = Date.now
-    return Entry(date: now, items: Snapshot.load(from: Store.snapshotURL).items(now: now, forWidget: true))
+    let snapshot = Snapshot.load(from: Store.snapshotURL)
+    return Entry(date: now, items: snapshot.items(now: now, forWidget: true), note: snapshot.appNote(now: now))
   }
 }
 
@@ -43,7 +45,7 @@ struct EntryView: View {
   let entry: Entry
 
   var body: some View {
-    BatteriesWidgetView(items: entry.items, family: family)
+    BatteriesWidgetView(items: entry.items, family: family, note: entry.note)
       // The system's default widget background, as Stocks has. macOS 27's own Batteries widget is
       // Liquid Glass, which other apps' widgets cannot get: materials and translucent colours come
       // out the same grey (measured 2026-11-21).

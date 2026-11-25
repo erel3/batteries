@@ -159,6 +159,7 @@ final class Monitor {
   /// The widget itself reloads only when something it draws changed: WidgetKit rations reloads.
   private func save(reloadWidget: Bool) {
     guard persist else { return }
+    snapshot.updated = .now
     do {
       try snapshot.save(to: Store.snapshotURL)
     } catch {

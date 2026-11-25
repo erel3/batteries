@@ -10,22 +10,34 @@ import WidgetKit
 public struct BatteriesWidgetView: View {
   let items: [BatteryItem]
   let family: WidgetFamily
+  /// Shown under the batteries when the app is not running ("Updated 2 hours ago").
+  let note: String?
 
-  public init(items: [BatteryItem], family: WidgetFamily) {
+  public init(items: [BatteryItem], family: WidgetFamily, note: String? = nil) {
     self.items = items
     self.family = family
+    self.note = note
   }
 
   public var body: some View {
     if items.isEmpty {
-      Text("No batteries").font(.callout).foregroundStyle(.secondary)
-    } else {
-      switch family {
-      case .systemSmall where items.count == 1: single(items[0])
-      case .systemSmall: grid(Self.fit(items, slots: 4))
-      case .systemMedium: row(Self.fit(items, slots: 4))
-      default: list(Self.fit(items, slots: 6))
+      Text(note ?? "No batteries").font(.callout).foregroundStyle(.secondary)
+    } else if let note {
+      VStack(spacing: 6) {
+        batteries
+        Text(note).font(.caption2).foregroundStyle(.secondary).lineLimit(1)
       }
+    } else {
+      batteries
+    }
+  }
+
+  @ViewBuilder private var batteries: some View {
+    switch family {
+    case .systemSmall where items.count == 1: single(items[0])
+    case .systemSmall: grid(Self.fit(items, slots: 4))
+    case .systemMedium: row(Self.fit(items, slots: 4))
+    default: list(Self.fit(items, slots: 6))
     }
   }
 

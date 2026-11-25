@@ -55,6 +55,16 @@ final class RenderTests: XCTestCase {
       Case(name: "medium", family: .systemMedium, size: CGSize(width: 364, height: 170), items: Self.items),
       Case(name: "large", family: .systemLarge, size: CGSize(width: 364, height: 382), items: Self.items)
     ]
+    for (name, family, size) in [("small-stopped", WidgetFamily.systemSmall, CGSize(width: 170, height: 170)),
+                                 ("large-stopped", .systemLarge, CGSize(width: 364, height: 382))] {
+      let greyed = Self.items.map { item in
+        BatteryItem(deviceID: item.deviceID, name: item.name, kind: item.kind, role: item.role,
+                    percent: item.percent, charging: item.charging, live: false)
+      }
+      try render(BatteriesWidgetView(items: greyed, family: family, note: "Updated 2 hours ago")
+        .padding(16).frame(width: size.width, height: size.height)
+        .background(Color(nsColor: .windowBackgroundColor)), name: name)
+    }
     for test in cases {
       let view = BatteriesWidgetView(items: test.items, family: test.family)
         .padding(16)

@@ -20,6 +20,9 @@ public struct Known: Codable, Equatable, Sendable, Identifiable {
 
 public struct Snapshot: Codable, Equatable, Sendable {
   public var devices: [Known] = []
+  /// When the app last saved, which it does on every read (once a minute). A heartbeat: the widget
+  /// tells "the app stopped" from "a device is away" by it. Nil in files from before it existed.
+  public var updated: Date?
 
   public init(devices: [Known] = []) {
     self.devices = devices

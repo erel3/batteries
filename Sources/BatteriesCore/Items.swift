@@ -35,6 +35,20 @@ extension Snapshot {
   public static let staleAfter: TimeInterval = 15 * 60
   /// The widget leaves out a device not seen for this long. Settings still lists it.
   public static let hideAfter: TimeInterval = 12 * 60 * 60
+  /// The app saves every minute; silence this long means it is not running (quit, crashed, login
+  /// item off), and the widget says so under the batteries.
+  public static let appSilentAfter: TimeInterval = 30 * 60
+
+  /// The widget's footer: nil while the app is running, how old the data is once it stops, and
+  /// "Open Batteries" when it never ran.
+  public func appNote(now: Date) -> String? {
+    guard let updated else { return "Open Batteries" }
+    guard now.timeIntervalSince(updated) > Self.appSilentAfter else { return nil }
+    let formatter = RelativeDateTimeFormatter()
+    formatter.unitsStyle = .full
+    return "Updated \(formatter.localizedString(for: updated, relativeTo: now))"
+  }
+
   /// Buds charging in their case drop out of the widget from this level: only the case remains.
   public static let budsDoneAt = 80
 

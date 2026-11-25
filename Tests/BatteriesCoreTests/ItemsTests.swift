@@ -74,6 +74,21 @@ final class ItemsTests: XCTestCase {
     XCTAssertEqual(pods(80, 85, charging: true).items(now: now, splitBuds: true).map(\.role), [.left, .right, .case], "settings keeps them")
   }
 
+  func testWidgetNoteSaysWhenTheAppStopped() {
+    var snapshot = Snapshot()
+    XCTAssertEqual(snapshot.appNote(now: now), "Open Batteries", "never ran")
+    snapshot.updated = now.addingTimeInterval(-Snapshot.appSilentAfter)
+    XCTAssertNil(snapshot.appNote(now: now), "running: saves every minute")
+    snapshot.updated = now.addingTimeInterval(-2 * 60 * 60)
+    XCTAssertEqual(snapshot.appNote(now: now)?.hasPrefix("Updated "), true)
+    XCTAssertEqual(snapshot.appNote(now: now)?.contains("2"), true)
+  }
+
+  func testSnapshotFromBeforeTheHeartbeatStillLoads() throws {
+    let old = Data(#"{"devices":[]}"#.utf8)
+    XCTAssertNil(try Snapshot.decoder.decode(Snapshot.self, from: old).updated)
+  }
+
   func testSplitBudsForSettings() {
     let items = Snapshot.items(of: airPods(left: 80, right: 78, case: 99), live: true, splitBuds: true)
     XCTAssertEqual(items.map(\.role), [.left, .right, .case])
